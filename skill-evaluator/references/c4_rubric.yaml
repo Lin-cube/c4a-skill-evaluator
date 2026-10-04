@@ -1,0 +1,86 @@
+# C4 Evaluation Rubric — Machine-Readable Reference (YAML, for humans)
+#
+# 说明：机器运行使用同目录下的 c4_rubric.json（标准库 json 零依赖加载）。
+#       本 YAML 与 JSON 语义一致，供人类阅读/编辑评审维度与权重。
+#       它继承并扩展自 starter 包 references/c4_rubric.yaml。
+
+# === COMPLETENESS: 5 Required Files ===
+required_deliverables:
+  skill_doc:
+    label_cn: "Skill 说明文档"
+    filename_patterns: ["skill说明", "skill_doc", "skill-doc", "skill_description", "说明"]
+    content_signals: ["使用场景", "输入", "输出", "解决什么问题", "use case", "input", "output"]
+    extensions: [".md", ".pdf", ".docx", ".txt"]
+
+  executable_content:
+    label_cn: "可执行内容"
+    filename_patterns: ["技能", "skill", "executable"]
+    content_signals: ["```", "def ", "class ", "import ", "---", "workflow", "pipeline"]
+    extensions: [".skill", ".py", ".md", ".zip"]
+
+  demo:
+    label_cn: "Demo（视频/截图）"
+    filename_patterns: ["demo", "演示", "截图", "screen", "录屏", "example"]
+    extensions: [".mp4", ".mov", ".webm", ".png", ".jpg", ".jpeg", ".gif"]
+
+  teaching_doc:
+    label_cn: "教学说明"
+    filename_patterns: ["教学说明", "教学", "tutorial", "teaching", "上手指南", "quickstart", "how-to"]
+    content_signals: ["上手", "步骤", "常见坑", "安装", "注意事项", "getting started", "step by step"]
+    extensions: [".md", ".pdf", ".docx", ".txt"]
+
+  ai_log:
+    label_cn: "AI 日志"
+    filename_patterns: ["AI日志", "AI_log", "ai-log", "ai_日志", "AI使用"]
+    content_signals: ["使用的 AI", "AI 工具", "prompt", "迭代次数", "迭代", "ChatGPT", "Claude", "DeepSeek"]
+    extensions: [".md", ".pdf", ".docx", ".txt"]
+
+# === QUALITY: 4 Criteria (C4 Four Conditions) ===
+quality_criteria:
+  reusable:
+    label_cn: "可复用"
+    weight: 0.25
+    positive_signals: ["安装", "install", "环境要求", "requirements", "dependencies", "pip install", "npm install", "兼容", "compatible", "依赖"]
+    negative_signals: ["/Users/", "/home/", "C:\\", "我的电脑", "my_secret", "api_key =", "password ="]
+    check_items:
+      - "有安装步骤或环境要求说明"
+      - "无硬编码绝对路径"
+      - "列明依赖 / 兼容性"
+      - "有平台无关或平台标注说明"
+
+  executable:
+    label_cn: "可执行"
+    weight: 0.25
+    positive_signals: ["```python", "```bash", "def ", "class ", "import ", "---", "workflow", "pipeline", "main(", "if __name__"]
+    check_items:
+      - "包含可运行代码 / prompt / workflow"
+      - "SKILL 包结构完整（有 frontmatter）"
+      - "无明显语法错误"
+      - "有明确执行入口或运行步骤"
+
+  verifiable:
+    label_cn: "可验证"
+    weight: 0.25
+    positive_signals: ["测试", "test", "example", "示例", "预期", "expected", "demo", "result", "结果", "断言", "assert"]
+    check_items:
+      - "有测试用例或示例"
+      - "定义了预期输出 / 结果"
+      - "Demo 展示真实结果"
+      - "成功/失败判定标准清晰"
+
+  clear_io:
+    label_cn: "IO 明确"
+    weight: 0.25
+    positive_signals: ["输入", "输出", "input", "output", "→", "接受", "返回", "generates", "produces", "returns"]
+    io_pattern: "输入.*输出|input.*output|接受.*返回|给定.*得到"
+    check_items:
+      - "有「输入X，输出Y」一句话描述"
+      - "输入类型/格式明确"
+      - "输出类型/格式明确"
+      - "边界情况（edge case）有说明"
+
+# === SCORING ===
+scoring:
+  composite_formula: "completeness * 0.4 + quality * 0.6"
+  completeness_weight: 0.4
+  quality_weight: 0.6
